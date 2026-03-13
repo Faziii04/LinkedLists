@@ -14,7 +14,6 @@ namespace _12_2_26WorkSameLetters
             // Initialize class instances for vector, matrix and math operations
             Matriz matrixHandler = new Matriz();
             Vector vectorHandler = new Vector();
-            MathMatrices mathHandler = new MathMatrices();
             
             int?[] currentArr = null;
             int?[,] currentMatrix = null;
@@ -168,15 +167,15 @@ namespace _12_2_26WorkSameLetters
                         break;
 
                     case "17":
-                        ValidarSudoku(mathHandler);
+                        ValidarSudoku();
                         break;
 
                     case "18":
-                        InvertirMatriz(mathHandler);
+                        InvertirMatriz();
                         break;
 
                     case "19":
-                        ResolverSistemaEcuaciones(mathHandler);
+                        ResolverSistemaEcuaciones();
                         break;
 
                     case "20":
@@ -226,7 +225,7 @@ namespace _12_2_26WorkSameLetters
                 Console.WriteLine("[!] Las palabras NO son anagramas.");
         }
 
-        static void ValidarSudoku(MathMatrices mathHandler)
+        static void ValidarSudoku()
         {
             Console.WriteLine("\n--- Validador de Sudoku ---");
             Console.WriteLine("Ingrese una matriz 9x9 con números del 1 al 9.\n");
@@ -264,7 +263,7 @@ namespace _12_2_26WorkSameLetters
                 }
             }
 
-            if (mathHandler.EsSolucionValida(sudokuMatrix))
+            if (MathMatrices.EsSolucionValida(sudokuMatrix))
                 Console.WriteLine("\n✔ ¡Sudoku válido!");
             else
                 Console.WriteLine("\n[!] Sudoku inválido. Contiene números repetidos.");
@@ -288,7 +287,7 @@ namespace _12_2_26WorkSameLetters
         }
 
         // Invert a matrix
-        static void InvertirMatriz(MathMatrices mathHandler)
+        static void InvertirMatriz()
         {
             Console.WriteLine("\n--- Inversor de Matrices ---");
             Console.WriteLine("Ingrese una matriz cuadrada NxN.\n");
@@ -344,8 +343,7 @@ namespace _12_2_26WorkSameLetters
             }
         }
 
-        // Solve system of linear equations
-        static void ResolverSistemaEcuaciones(MathMatrices mathHandler)
+        static void ResolverSistemaEcuaciones()
         {
             Console.WriteLine("\n--- Resoltor de Sistemas de Ecuaciones ---");
             Console.WriteLine("Resolverá sistemas de la forma: Ax = b\n");

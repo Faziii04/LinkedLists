@@ -129,7 +129,7 @@ namespace _12_2_26WorkSameLetters
          */
 
 
-        public bool EsSolucionValida(int?[,] matrix)
+        public static bool EsSolucionValida(int?[,] matrix)
         {
             if (matrix.GetLength(0) != 9 || matrix.GetLength(1) != 9)
                 return false;
@@ -167,7 +167,9 @@ namespace _12_2_26WorkSameLetters
  * 
  * 
  * so basically the submatrix traversal goes like this x -> x -> x
- *                                                     x -> ..
+ *                                                     x -> x -> x
+ *                                                     x -> ......
+ *                                                     this happens on both inside and outside the submatrixes
  * basically from left to right and from up to down
                      */
 
@@ -179,7 +181,7 @@ namespace _12_2_26WorkSameLetters
             return true;
         }
 
-        private bool ValidarCelda(int? valor, bool[] checklist)
+        private static bool ValidarCelda(int? valor, bool[] checklist)
         {
             // the cell cant be null
             if (valor == null) return false;

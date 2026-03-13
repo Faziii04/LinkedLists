@@ -10,12 +10,12 @@ namespace _12_2_26WorkSameLetters
         {
             int n = matrix.GetLength(0);
 
-            // 1. VALIDATION: Only square matrices have inverses.
+            // 1. VALIDATION: only square matrices have inverses.
             if (n != matrix.GetLength(1))
                 throw new ArgumentException("Matrix must be square.");
 
-            // 2. AUGMENTATION: Create a matrix of size [n, 2n].
-            // It looks like: [ Original Matrix | Identity Matrix ]
+            // 2. AUGMENTATION: create a matrix of size n, 2n (twice as long).
+            // It looks like: my matrix | identity matrix
             // 
             double[,] augmented = new double[n, 2 * n];
             for (int i = 0; i < n; i++)
@@ -30,9 +30,9 @@ namespace _12_2_26WorkSameLetters
             // 3. GAUSS-JORDAN ELIMINATION
             for (int i = 0; i < n; i++)
             {
-                // --- STEP A: Partial Pivoting ---
-                // Find the row with the largest absolute value in the current column 'i'.
-                // This reduces rounding errors and prevents dividing by zero.
+                // --- A: Partial Pivoting ---
+                // find the row with the largest absolute value in the current column 'i'.
+                // this reduces rounding errors and prevents dividing by zero.
                 int pivotIndex = i;
                 for (int j = i + 1; j < n; j++)
                 {
@@ -40,7 +40,7 @@ namespace _12_2_26WorkSameLetters
                         pivotIndex = j;
                 }
 
-                // Swap the current row with the pivot row found above.
+                // in case the pivotIndex isnt equal to i, we can assume theres another row with a larger value so we simply swap the rows with the code below
                 if (pivotIndex != i)
                 { 
                     for (int k = 0; k < 2 * n; k++)
@@ -56,17 +56,20 @@ namespace _12_2_26WorkSameLetters
                 if (Math.Abs(augmented[i, i]) < 1e-12)
                     throw new InvalidOperationException("Matrix is singular (cannot be inverted).");
 
-                // --- STEP C: Normalization ---
-                // Divide the entire pivot row by the pivot value so the diagonal becomes 1.
-                double divisor = augmented[i, i];
+                // --- C: Normalization ---
+                // divide the entire pivot row by the pivot in order to get 1 in that specific row
+                double divisor = augmented[i, i]; //here the divisor is always the diagonal value in each row i,i ie. 1,1 or 2,2
                 for (int j = i; j < 2 * n; j++)
                     augmented[i, j] /= divisor;
 
-                // --- STEP D: Elimination ---
-                // For every other row (above and below the pivot)...
+                // --- D: elimination ---
+                // now we are traversing the rows in the i column and check the values above or below the pivot to transform them into 0s and only those values.
+                // we are transforming non pivot values that are right above or below the pivot from left to right using the most upper loop that holds i
+                // we are doing this using this part of the code augmented[row, col] -= factor * augmented[i, col]; that will guarantee that the value above or
+                // below the pivot will end up as 0, however the entire factor row needs to be subtracted as well in order to maintain the equality
                 for (int row = 0; row < n; row++)
                 {
-                    if (row != i) // Don't subtract the pivot row from itself
+                    if (row != i) // we are not subtracting the pivot row from itself
                     {
                         // Find the factor that would make the value in the current column 0.
                         double factor = augmented[row, i];

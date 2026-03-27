@@ -230,7 +230,7 @@ namespace _12_2_26WorkSameLetters
             Console.WriteLine("\n--- Validador de Sudoku ---");
             Console.WriteLine("Ingrese una matriz 9x9 con números del 1 al 9.\n");
 
-            int?[,] sudokuMatrix = new int?[9, 9];
+            int[,] sudokuMatrix = new int[9, 9];
             Console.WriteLine("Escriba cada fila (9 números separados por espacio):\n");
 
             for (int i = 0; i < 9; i++)
@@ -263,7 +263,7 @@ namespace _12_2_26WorkSameLetters
                 }
             }
 
-            if (MathMatrices.EsSolucionValida(sudokuMatrix))
+            if (MathMatrices.EsSolucionValidaV3(sudokuMatrix))
                 Console.WriteLine("\n✔ ¡Sudoku válido!");
             else
                 Console.WriteLine("\n[!] Sudoku inválido. Contiene números repetidos.");
@@ -276,7 +276,7 @@ namespace _12_2_26WorkSameLetters
                 Console.WriteLine($"\n--- Información del Array ---");
                 Console.WriteLine($"Longitud: {currentArr.Length}");
                 Console.WriteLine($"Elementos no nulos: {currentArr.Count(x => x.HasValue)}");
-                if (currentArr.Any(x => x.HasValue))
+                if (currentArr.Any(x => x.HasValue)) 
                 {
                     Console.WriteLine($"Mínimo: {currentArr.Where(x => x.HasValue).Min()}");
                     Console.WriteLine($"Máximo: {currentArr.Where(x => x.HasValue).Max()}");

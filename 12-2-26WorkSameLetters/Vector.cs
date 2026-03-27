@@ -177,48 +177,63 @@ namespace _12_2_26WorkSameLetters
             return res;
         }
 
-      
-        
 
-            public int?[] BubbleSort(int?[] arr)
+
+        //
+                                                         
+        public int?[] BubbleSort(int?[] arr)
+        {
+            int n = arr.Length;
+
+            for (int i = 0; i < n - 1; i++)
             {
-                bool swapped = true;
-                while (swapped)
+                for (int j = 0; j < n - i - 1; j++)
                 {
-                    int passes = 0;
-                    for (int i = 0; i < arr.Length - 1; i++)
+                    if (arr[j] > arr[j + 1])
                     {
-                        if (arr[i] > arr[i + 1])
-                        {
-                            int temp = (int)arr[i];
-                            arr[i] = arr[i + 1];
-                            arr[i + 1] = temp;
-                            passes++;
-                        }
+                        int? temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
                     }
-                    if (passes == 0) swapped = false;
                 }
-                Console.WriteLine("\nArray ordenado con BubbleSort.");
-                return arr;
             }
+
+            Console.WriteLine("\nArray ordenado con BubbleSort V3 (Lazos fijos).");
+            return arr;
+        }
+
+
+
+        // basically we start with GAP number being the always half the lenght of the array.. and from there we keep halving it untile its 0
+        // then comes the MIDDLE LOOP which runs from GAP to the end. 
+        // last loop basically compares MIDDLE LOOP index with the index that is GAP behind it. over and over
+
 
         public int?[] ShellSort(int?[] arr)
         {
             int n = arr.Length;
+
             for (int gap = n / 2; gap > 0; gap /= 2)
             {
-                for (int i = gap; i < n; i++)
+                for (int j = gap; j < n; j++)
                 {
-                    int? temp = arr[i];
-                    int j;
-                    for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+                    for (int k = j - gap; k >= 0; k -= gap)
                     {
-                        arr[j] = arr[j - gap];
+                        if (arr[k + gap] >= arr[k])
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            int? temp = arr[k + gap];
+                            arr[k + gap] = arr[k];
+                            arr[k] = temp;
+                        }
                     }
-                    arr[j] = temp;
                 }
             }
-            Console.WriteLine("\nArray ordenado con ShellSort.");
+
+            Console.WriteLine("\nArray ordenado con ShellSort V2 (Estilo Swap).");
             return arr;
         }
 
@@ -236,6 +251,9 @@ namespace _12_2_26WorkSameLetters
 
         private void QuickSortHelper(int?[] arr, int left, int right)
         {
+
+            // basically we check that theres only 1 element in the substring
+
             if (left < right)
             {
                 int pivotIndex = PartitionQuick(arr, left, right);
@@ -244,6 +262,11 @@ namespace _12_2_26WorkSameLetters
             }
         }
 
+
+        //basically what happens is that 'i' is going to be what keeps track of the index the pivot(last element) will go to after the
+        //partitioning finishes.. so basically when we find an number smaller than the pivot.. we move i forward and put the smaller
+        //number there.. until we finish the loop and then we move the last element to i+1.. which is just the index 1 pos ahead of the
+        //last smaller number we found.. and then we return that index to be the pivot index for the next recursive calls
         private int PartitionQuick(int?[] arr, int left, int right)
         {
             int? pivot = arr[right];

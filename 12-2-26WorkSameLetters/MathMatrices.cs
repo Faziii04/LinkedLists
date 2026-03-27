@@ -129,6 +129,7 @@ namespace _12_2_26WorkSameLetters
          */
 
 
+        /*
         public static bool EsSolucionValida(int?[,] matrix)
         {
             if (matrix.GetLength(0) != 9 || matrix.GetLength(1) != 9)
@@ -171,16 +172,15 @@ namespace _12_2_26WorkSameLetters
  *                                                     x -> ......
  *                                                     this happens on both inside and outside the submatrixes
  * basically from left to right and from up to down
-                     */
+                     
 
-                    int rowIdx = 3 * (i / 3) + (j / 3);
+        int rowIdx = 3 * (i / 3) + (j / 3);
                     int colIdx = 3 * (i % 3) + (j % 3);
                     if (!ValidarCelda(matrix[rowIdx, colIdx], gridCheck)) return false;
                 }
             }
             return true;
         }
-
         private static bool ValidarCelda(int? valor, bool[] checklist)
         {
             // the cell cant be null
@@ -198,6 +198,64 @@ namespace _12_2_26WorkSameLetters
             checklist[num - 1] = true;
             return true;
         }
+        
+         */
+
+        public static bool EsSolucionValidaV3(int[,] matrix)
+        {
+            if (matrix.GetLength(0) != 9 || matrix.GetLength(1) != 9)
+                return false;
+
+            for (int i = 0; i < 9; i++)
+            {
+                int[] fila = new int[9];
+                int[] col = new int[9];
+
+                for (int j = 0; j < 9; j++)
+                {
+                    if (matrix[i, j] < 1 || matrix[i, j] > 9 ||
+                        matrix[j, i] < 1 || matrix[j, i] > 9)
+                        return false;
+
+                    fila[j] = matrix[i, j];
+                    col[j] = matrix[j, i];
+                }
+
+                BubbleSortV3(fila);
+                BubbleSortV3(col);
+
+                for (int k = 1; k < 9; k++)
+                {
+                    if (fila[k] == fila[k - 1] || col[k] == col[k - 1])
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static void BubbleSortV3(int[] arr)
+        {
+            int n = arr.Length;
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (arr[j] > arr[j + 1])
+                    {
+                        int temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+        }
+
+   
+
+
+
+
 
     }
 }
